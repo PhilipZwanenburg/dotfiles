@@ -44,6 +44,7 @@ values."
      github
      (shell :variables
             shell-default-shell 'eshell
+            shell-default-height 20
             shell-default-position 'left)
      (spell-checking :variables spell-checking-enable-by-default nil)
      (syntax-checking :variables syntax-checking-enable-by-default nil)
@@ -78,7 +79,7 @@ values."
                          spacemacs-light)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 12
+                               :size 9
                                :weight demibold
                                :width normal
                                :powerline-scale 1.15)
@@ -107,7 +108,7 @@ values."
    dotspacemacs-which-key-delay 0.4
    dotspacemacs-which-key-position 'bottom
    dotspacemacs-loading-progress-bar t
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
    dotspacemacs-fullscreen-use-non-native nil
    dotspacemacs-maximized-at-startup nil
    dotspacemacs-active-transparency 90
@@ -149,6 +150,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
    ;; Avy
    avy-all-windows 'all-frames
+
+   ;; Compilation
+   ;; For parallel compile: SPC u NUM_THREADS SPC c c
+   compilation-auto-jump-to-first-error t
+   compilation-skip-threshold 0 ; Do not skip any messages
    )
   )
 
@@ -156,7 +162,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Settings
   (add-hook 'text-mode-hook 'auto-fill-mode) ; Line wrap automatically in text-mode.
   (add-hook 'makefile-mode-hook 'whitespace-mode)
-  (add-hook 'prog-mode-hook 'page-break-lines-mode)
+  (add-hook 'c-mode-hook 'spacemacs/toggle-auto-fill-mode) ;; \todo figure out how to place these in .dir-locals.el
+  (add-hook 'c-mode-hook 'spacemacs/toggle-fill-column-indicator)
 
   ;; Additional Leader Keys
   ;; Evil
@@ -170,9 +177,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (spacemacs/set-leader-keys
     "feh" 'helm-spacemacs-help
     )
-
-  ;; Safe local variables
-  (put 'helm-make-build-dir 'safe-local-variable 'stringp)
 
   ;; Workarounds
   (setq-default
@@ -203,7 +207,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
                   (inline-open . 0)
                   (inextern-lang . 0)
                   (innamespace . 0) ; 0: no indentation in namespaces; +: opposite.
-                  (topmost-intro-cont . +) ; 0: remove indentation after function name; +: opposite.
+                  (topmost-intro-cont . 0) ; 0: remove indentation after function name; +: opposite.
                   )))
 
   (push '(other . "pz") c-default-style)
@@ -219,11 +223,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Debugging
   (setq debug-on-error 't) ; Show lisp errors in debugger.
 
-  ;; Compilation related parameters
-  (setq compilation-auto-jump-to-first-error 't)
-  (setq compilation-auto-jump-to-next 't)
-  (setq compilation-skip-threshold 0) ; Do not skip any messages
-
+  ;; Safe local variables
+  (put 'helm-make-build-dir 'safe-local-variable 'stringp)
   )
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -233,6 +234,29 @@ before packages are loaded. If you are unsure, you should try in setting them in
  '(safe-local-variable-values
    (quote
     ((eval add-hook
+           (quote c-mode-local-vars-hook)
+           (lambda nil
+             (modify-syntax-entry 95 "w")))
+     (eval add-hook
+           (quote c-mode-local-vars-hook)
+           (lambda nil
+             (c-set-offset
+              (quote topmost-intro-cont)
+              (quote +))))
+     (eval add-hook
+           (quote c-mode-local-vars-hook)
+           (lambda nil
+             (c-set-offset
+              (quote innamespace)
+              0)))
+     (helm-make-build-dir . "build_debug_2D")
+     (eval add-hook
+           (quote c-mode-local-vars-hook)
+           (lambda nil
+             (c-set-offset
+              (quote topmost-intro-cont)
+              0)))
+     (eval add-hook
            (quote c++-mode-local-vars-hook)
            (lambda nil
              (c-set-offset
