@@ -33,6 +33,7 @@ values."
      ranger ; `SPC a r'. file manager using vim shortcuts.
 
      ;; Other
+     ;; Note: Can quickly type "fd" to exit auto-complete.
      (auto-completion :variables
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-return-key-behavior 'complete
@@ -42,6 +43,7 @@ values."
                       )
      git
      github
+     osx
      (shell :variables
             shell-default-shell 'eshell
             shell-default-height 20
@@ -53,6 +55,7 @@ values."
    dotspacemacs-additional-packages
    '(visual-line-mode
      helm-flycheck
+     smart-tabs-mode
      )
 
    dotspacemacs-frozen-packages '()
@@ -79,7 +82,7 @@ values."
                          spacemacs-light)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 9
+                               :size 16
                                :weight demibold
                                :width normal
                                :powerline-scale 1.15)
@@ -184,6 +187,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
    python-shell--interpreter-args nil)
 
   ;; Style
+  (smart-tabs-insinuate 'c 'c++ 'python)
   (c-add-style "pz" ; mostly copied from the "stroustrup", "linux" and "bb" styles.
                '((indent-tabs-mode . nil) ; t: expandtab; nil: opposite.
                  (c-basic-offset . 4)
@@ -221,7 +225,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (run-hooks (intern (concat (symbol-name major-mode) "-local-vars-hook"))))
 
   ;; Debugging
-  (setq debug-on-error 't) ; Show lisp errors in debugger.
+  ;; (setq debug-on-error 't) ; Show lisp errors in debugger (Has some incompatibility with compilation-auto-jump).
 
   ;; Safe local variables
   (put 'helm-make-build-dir 'safe-local-variable 'stringp)
@@ -231,6 +235,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (smart-tabs-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl yapfify xterm-color smeargle shell-pop ranger pyvenv pytest pyenv-mode py-isort pip-requirements origami orgit org-ref pdf-tools key-chord ivy htmlize tablist multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-gh-pulls live-py-mode ibuffer-projectile hy-mode dash-functional helm-pydoc helm-gitignore helm-flycheck helm-company helm-c-yasnippet helm-bibtex parsebib gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub with-editor eshell-z eshell-prompt-extras esh-help disaster cython-mode csv-mode company-statistics company-c-headers company-auctex company-anaconda company cmake-mode clang-format biblio biblio-core auto-yasnippet yasnippet auto-dictionary auctex-latexmk auctex anaconda-mode pythonic ac-ispell auto-complete monokai-theme ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(safe-local-variable-values
    (quote
     ((eval add-hook
