@@ -39,11 +39,11 @@ values."
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'cycle
                       auto-completion-complete-with-key-sequence "jk"
-                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-complete-with-key-sequence-delay 0.2
                       )
      git
      github
-     ;; osx
+     osx
      (shell :variables
             shell-default-shell 'eshell
             shell-default-height 20
@@ -59,7 +59,7 @@ values."
      )
 
    dotspacemacs-frozen-packages '()
-   dotspacemacs-excluded-packages '()))
+   dotspacemacs-excluded-packages '(smartparens)))
 
 (defun dotspacemacs/init ()
   (setq-default
@@ -82,7 +82,7 @@ values."
                          spacemacs-light)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 9
+                               :size 16
                                :weight demibold
                                :width normal
                                :powerline-scale 1.15)
@@ -143,7 +143,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
    indent-tabs-mode nil
 
    ;; Theming
-   monokai-highlight-line "#3a3a3a"
+   monokai-highlight-line "#3A3A3A"
 
    ;; Evil
    evil-shift-round nil
@@ -165,9 +165,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Settings
   (add-hook 'text-mode-hook 'auto-fill-mode) ; Line wrap automatically in text-mode.
   (add-hook 'makefile-mode-hook 'whitespace-mode)
-
-  ;; \todo Settings to be placed in .dir-locals.el
-  (add-hook 'c-mode-hook 'spacemacs/toggle-auto-fill-mode)
+  (custom-set-faces '(evil-search-highlight-persist-highlight-face ((t (:background "selectedMenuItemColor"))))) ; Better contrast for search highlight
+  (add-hook 'c-mode-hook 'spacemacs/toggle-auto-fill-mode) ;; \todo figure out how to place these in .dir-locals.el
   (add-hook 'c-mode-hook 'spacemacs/toggle-fill-column-indicator)
 
   ;; Additional Leader Keys
@@ -183,6 +182,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Spacemacs
   (spacemacs/set-leader-keys
     "feh" 'helm-spacemacs-help
+    "er" "erTn" ; // vim shortcut: 'e'nd 'r'eplace with 'T', 'n'ext; /todo Delete when finished with the templating
     )
 
   ;; Workarounds
