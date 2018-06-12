@@ -43,7 +43,7 @@ values."
                       )
      git
      github
-     osx
+     ;; osx
      (shell :variables
             shell-default-shell 'eshell
             shell-default-height 20
@@ -82,7 +82,7 @@ values."
                          spacemacs-light)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 16
+                               :size 9
                                :weight demibold
                                :width normal
                                :powerline-scale 1.15)
@@ -104,7 +104,7 @@ values."
    dotspacemacs-auto-save-file-location 'cache
    dotspacemacs-max-rollback-slots 10
    dotspacemacs-helm-resize t
-   dotspacemacs-helm-no-header t
+   dotspacemacs-helm-no-header nil
    dotspacemacs-helm-position 'bottom
    dotspacemacs-helm-use-fuzzy 'always
    dotspacemacs-enable-paste-transient-state t
@@ -165,7 +165,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Settings
   (add-hook 'text-mode-hook 'auto-fill-mode) ; Line wrap automatically in text-mode.
   (add-hook 'makefile-mode-hook 'whitespace-mode)
-  (add-hook 'c-mode-hook 'spacemacs/toggle-auto-fill-mode) ;; \todo figure out how to place these in .dir-locals.el
+
+  ;; \todo Settings to be placed in .dir-locals.el
+  (add-hook 'c-mode-hook 'spacemacs/toggle-auto-fill-mode)
   (add-hook 'c-mode-hook 'spacemacs/toggle-fill-column-indicator)
 
   ;; Additional Leader Keys
@@ -174,6 +176,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
   (define-key evil-normal-state-map (kbd "C-A") "ggVG") ; Select All (visual mode)
+  (define-key evil-normal-state-map (kbd "<f5>") "yawp")
+  (define-key evil-normal-state-map (kbd "<f6>") "yawep")
   (evil-leader/set-key
     "os" 'just-one-space) ; Convert space to one space using `SPC os'.
   ;; Spacemacs
@@ -230,54 +234,3 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Safe local variables
   (put 'helm-make-build-dir 'safe-local-variable 'stringp)
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (smart-tabs-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl yapfify xterm-color smeargle shell-pop ranger pyvenv pytest pyenv-mode py-isort pip-requirements origami orgit org-ref pdf-tools key-chord ivy htmlize tablist multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-gh-pulls live-py-mode ibuffer-projectile hy-mode dash-functional helm-pydoc helm-gitignore helm-flycheck helm-company helm-c-yasnippet helm-bibtex parsebib gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub with-editor eshell-z eshell-prompt-extras esh-help disaster cython-mode csv-mode company-statistics company-c-headers company-auctex company-anaconda company cmake-mode clang-format biblio biblio-core auto-yasnippet yasnippet auto-dictionary auctex-latexmk auctex anaconda-mode pythonic ac-ispell auto-complete monokai-theme ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
- '(safe-local-variable-values
-   (quote
-    ((eval add-hook
-           (quote c-mode-local-vars-hook)
-           (lambda nil
-             (modify-syntax-entry 95 "w")))
-     (eval add-hook
-           (quote c-mode-local-vars-hook)
-           (lambda nil
-             (c-set-offset
-              (quote topmost-intro-cont)
-              (quote +))))
-     (eval add-hook
-           (quote c-mode-local-vars-hook)
-           (lambda nil
-             (c-set-offset
-              (quote innamespace)
-              0)))
-     (helm-make-build-dir . "build_debug_2D")
-     (eval add-hook
-           (quote c-mode-local-vars-hook)
-           (lambda nil
-             (c-set-offset
-              (quote topmost-intro-cont)
-              0)))
-     (eval add-hook
-           (quote c++-mode-local-vars-hook)
-           (lambda nil
-             (c-set-offset
-              (quote topmost-intro-cont)
-              0)))
-     (eval add-hook
-           (quote c++-mode-local-vars-hook)
-           (lambda nil
-             (c-set-offset
-              (quote innamespace)
-              (quote +))))))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((((class color) (min-colors 257)) (:foreground "#F8F8F2" :background "#272822")) (((class color) (min-colors 89)) (:foreground "#F5F5F5" :background "#1B1E1C")))))
