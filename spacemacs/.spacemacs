@@ -43,7 +43,7 @@ values."
                       )
      git
      github
-     osx
+     ;; osx
      (shell :variables
             shell-default-shell 'eshell
             shell-default-height 20
@@ -82,7 +82,7 @@ values."
                          spacemacs-light)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 16
+                               :size 9
                                :weight demibold
                                :width normal
                                :powerline-scale 1.15)
@@ -143,7 +143,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
    indent-tabs-mode nil
 
    ;; Theming
-   monokai-highlight-line "#3A3A3A"
+   monokai-highlight-line "#3a3a3a"
 
    ;; Evil
    evil-shift-round nil
@@ -158,6 +158,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
    ;; For parallel compile: SPC u NUM_THREADS SPC c c
    compilation-auto-jump-to-first-error t
    compilation-skip-threshold 0 ; Do not skip any messages
+   compilation-ask-about-save nil ; Automatically save all modified files before compilation.
    )
   )
 
@@ -165,8 +166,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Settings
   (add-hook 'text-mode-hook 'auto-fill-mode) ; Line wrap automatically in text-mode.
   (add-hook 'makefile-mode-hook 'whitespace-mode)
+
+  ;; \todo Settings to be placed in .dir-locals.el
   (custom-set-faces '(evil-search-highlight-persist-highlight-face ((t (:background "selectedMenuItemColor"))))) ; Better contrast for search highlight
-  (add-hook 'c-mode-hook 'spacemacs/toggle-auto-fill-mode) ;; \todo figure out how to place these in .dir-locals.el
+  (add-hook 'c-mode-hook 'spacemacs/toggle-auto-fill-mode)
   (add-hook 'c-mode-hook 'spacemacs/toggle-fill-column-indicator)
 
   ;; Additional Leader Keys
